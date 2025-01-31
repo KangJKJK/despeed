@@ -78,8 +78,8 @@ case $choice in
     # 계정토큰파일 생성
     echo -e "${GREEN}계정토큰을 얻어야합니다. 토큰이 만료될 가능성도 있으니 가끔씩 점검해주세요.{NC}"
     echo -e "${YELLOW}1.대시보드 사이트에서 F12를 눌러주세요${NC}"
-    echo -e "${YELLOW}2.여러 개의 프록시는 줄바꿈으로 구분하세요.${NC}"
-    echo -e "${YELLOW}3.입력을 마치려면 엔터를 두 번 누르세요.${NC}"
+    echo -e "${YELLOW}2.어플리케이션탭에서 로컬스토리지를 클릭하세요.${NC}"
+    echo -e "${YELLOW}3.token을 줄바꿈으로 입력하세요.${NC}"
 
     {
         while IFS= read -r line; do
