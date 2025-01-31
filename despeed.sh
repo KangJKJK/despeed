@@ -40,18 +40,26 @@ case $choice in
     git clone https://github.com/KangJKJK/despeed-base
     cd "$WORK"
 
-    # Node.js LTS 버전 설치 및 사용
-    echo -e "${YELLOW}Node.js 설치 상태 확인 중...${NC}"
-    if ! command -v node &> /dev/null; then
-        echo -e "${YELLOW}Node.js LTS 버전을 설치하고 설정 중...${NC}"
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # nvm을 로드합니다
-        nvm install --lts
-        nvm use --lts
+    # 1. Node.js 버전 확인
+    current_node_version=$(node -v 2>/dev/null)
+    required_version="v22"
+
+    # 2. 버전 체크 및 설치
+    if [[ ! $current_node_version == v22* ]]; then
+        echo "Node.js 22 버전 설치가 필요합니다."
+        curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+        sudo apt-get install -y nodejs
+        
+        # nvm 설치 및 Node.js 22 버전 설정
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        nvm install 22
+        nvm use 22
+        
+        echo "Node.js $(node -v) 설치 완료"
     else
-        echo -e "${GREEN}Node.js가 이미 설치되어 있습니다.${NC}"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # nvm을 로드합니다
-        nvm use --lts
+        echo "이미 Node.js $current_node_version 가 설치되어 있습니다."
     fi
     npm install
 
